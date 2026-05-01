@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
+  <rect width="320" height="320" fill="#EDE9F4" stroke="#A263D2" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="50%" y="44%" dominant-baseline="middle" text-anchor="middle"
+        font-family="Poppins, Arial, sans-serif" font-size="22" font-weight="600" fill="#49104F">Logo — Stacked</text>
+  <text x="50%" y="57%" dominant-baseline="middle" text-anchor="middle"
+        font-family="Arial, sans-serif" font-size="17" fill="#49104F" opacity="0.6">320 × 320 px</text>
+  <text x="50%" y="68%" dominant-baseline="middle" text-anchor="middle"
+        font-family="Arial, sans-serif" font-size="14" fill="#49104F" opacity="0.4">logo-stacked.svg</text>
+</svg>

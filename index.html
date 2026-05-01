@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ─── SEO: Update these per page ─────────────────────── -->
+  <title>[Brand Name] | [Page Title]</title>
+  <meta name="description" content="[Page meta description — 140–160 characters]">
+  <link rel="canonical" href="https://[domain.com]/[page-slug]/">
+
+  <!-- ─── Fonts: Replace with brand font import ───────────── -->
+  <!-- TODO: Replace this link with the correct Google Fonts import for this brand -->
+  <!-- Example: <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"> -->
+
+  <!-- ─── Styles ──────────────────────────────────────────── -->
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+
+  <!-- ─── Favicon: Replace with brand icon ───────────────── -->
+  <link rel="icon" type="image/svg+xml" href="assets/images/logos/logo-icon.svg">
+
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════════
+       NAVIGATION
+       ════════════════════════════════════════════════════════ -->
+  <nav class="nav">
+    <div class="container nav__inner">
+
+      <a href="/" class="nav__logo">
+        <img
+          src="assets/images/logos/logo-horizontal-white.svg"
+          alt="[Brand Name] logo"
+          width="240"
+          height="60"
+        >
+      </a>
+
+      <button class="nav__toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav__links" id="nav-links">
+        <!-- TODO: Replace with brand nav items -->
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+        <li>
+          <a href="tel:[PHONE]" class="btn btn--nav">
+            Call [PHONE]
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       HERO
+       ════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero__bg">
+      <img
+        src="assets/images/stock/stock_hero_wide.webp"
+        alt=""
+        role="presentation"
+        width="1920"
+        height="640"
+      >
+    </div>
+    <div class="container hero__content">
+      <p class="label"><!-- Service area or tagline label --></p>
+      <h1><!-- Primary headline --></h1>
+      <p class="hero__sub"><!-- Supporting subheadline --></p>
+      <div class="hero__ctas">
+        <a href="tel:[PHONE]" class="btn btn--primary">Call [PHONE]</a>
+        <a href="/contact/" class="btn btn--secondary">Get a Free Quote</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       MAIN CONTENT
+       Add sections below. Copy section blocks from components.css.
+       ════════════════════════════════════════════════════════ -->
+  <main id="main-content">
+
+    <!-- EXAMPLE: Intro / Value Prop Section -->
+    <section class="section section--light">
+      <div class="container">
+        <p class="label"><!-- Section label --></p>
+        <h2><!-- Section heading --></h2>
+        <p><!-- Section body copy --></p>
+      </div>
+    </section>
+
+    <!-- Add more sections here -->
+
+  </main>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       FOOTER
+       ════════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container footer__inner">
+
+      <div class="footer__brand">
+        <img
+          src="assets/images/logos/logo-horizontal-white.svg"
+          alt="[Brand Name] logo"
+          width="200"
+          height="50"
+        >
+        <p><!-- One-line brand description --></p>
+        <p class="footer__affiliation">Powered by The Purple Standard</p>
+      </div>
+
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <h3>Services</h3>
+        <ul>
+          <!-- TODO: Add service links -->
+          <li><a href="/services/">[Service Name]</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer__nav" aria-label="Footer company links">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer__contact">
+        <h3>Contact</h3>
+        <p><a href="tel:[PHONE]">[PHONE]</a></p>
+        <p><a href="mailto:[EMAIL]">[EMAIL]</a></p>
+        <p>[City, State]</p>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <div class="container">
+        <p>&copy; <span id="year"></span> [Brand Name]. All rights reserved.</p>
+        <p><a href="/privacy/">Privacy Policy</a></p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ─── Scripts ─────────────────────────────────────────── -->
+  <script>
+    // Auto-update copyright year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile nav toggle
+    const toggle = document.querySelector('.nav__toggle');
+    const navLinks = document.getElementById('nav-links');
+    if (toggle && navLinks) {
+      toggle.addEventListener('click', () => {
+        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', !isOpen);
+        navLinks.classList.toggle('nav__links--open');
+      });
+    }
+  </script>
+
+</body>
+</html>

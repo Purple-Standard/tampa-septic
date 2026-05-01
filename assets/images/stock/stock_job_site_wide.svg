@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600">
+  <rect width="1200" height="600" fill="#EDE9F4" stroke="#A263D2" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="50%" y="44%" dominant-baseline="middle" text-anchor="middle"
+        font-family="Poppins, Arial, sans-serif" font-size="42" font-weight="600" fill="#49104F">Job Site — Wide</text>
+  <text x="50%" y="57%" dominant-baseline="middle" text-anchor="middle"
+        font-family="Arial, sans-serif" font-size="33" fill="#49104F" opacity="0.6">1200 × 600 px</text>
+  <text x="50%" y="68%" dominant-baseline="middle" text-anchor="middle"
+        font-family="Arial, sans-serif" font-size="27" fill="#49104F" opacity="0.4">stock_job_site_wide.svg</text>
+</svg>

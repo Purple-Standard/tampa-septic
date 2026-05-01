@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="640" viewBox="0 0 1920 640">
+  <rect width="1920" height="640" fill="#EDE9F4" stroke="#A263D2" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="50%" y="44%" dominant-baseline="middle" text-anchor="middle"
+        font-family="Poppins, Arial, sans-serif" font-size="45" font-weight="600" fill="#49104F">Hero — Full Width</text>
+  <text x="50%" y="57%" dominant-baseline="middle" text-anchor="middle"
+        font-family="Arial, sans-serif" font-size="35" fill="#49104F" opacity="0.6">1920 × 640 px</text>
+  <text x="50%" y="68%" dominant-baseline="middle" text-anchor="middle"
+        font-family="Arial, sans-serif" font-size="29" fill="#49104F" opacity="0.4">stock_hero_wide.svg</text>
+</svg>

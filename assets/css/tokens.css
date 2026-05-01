@@ -1,0 +1,183 @@
+/* =============================================================
+   DESIGN TOKENS — Starter Template
+   Version: 1.0
+   Last Updated: [YYYY-MM-DD]
+
+   ⚠  THIS IS THE ONLY FILE A CSS EDITOR SHOULD NEED TO TOUCH
+      to re-skin this site for a new client.
+
+   INSTRUCTIONS FOR CSS EDITORS:
+   1. Replace every [TODO] value with the correct brand value.
+   2. Do NOT change variable names — components.css references them.
+   3. Do NOT add color values anywhere in components.css directly —
+      always define new values here first, then reference them there.
+   4. Commit this file with a message like:
+        v1.1 - tokens.css - updated brand colors for [Client Name]
+
+   CHANGE LOG:
+   - v1.0 ([YYYY-MM-DD]): Initial tokens for [Client Name]
+   ============================================================= */
+
+
+/* ─────────────────────────────────────────────────────────────
+   REQUIRED: Fill in all [TODO] values before first commit.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+
+  /* ── CORE BRAND COLORS ─────────────────────────────────────
+     Primary:   Main nav, hero backgrounds, headings
+     Accent:    CTAs, labels, hover highlights, icon accents
+     Mid:       Interactive states, links, card accents
+     Neon:      Hover accents, tag borders, interactive fills
+     Light:     Subtle tints, gradient overlays
+     Dark:      Footer background
+     Deepest:   Primary body text, dark overlays
+  ──────────────────────────────────────────────────────────── */
+
+  --color-primary:          [TODO: hex];   /* e.g. #49104F */
+  --color-accent:           [TODO: hex];   /* e.g. #EBA950 */
+  --color-accent-hover:     [TODO: hex];   /* e.g. #E4B776 — lighter accent for hover states */
+  --color-mid:              [TODO: hex];   /* e.g. #771686 */
+  --color-neon:             [TODO: hex];   /* e.g. #A263D2 */
+  --color-light:            [TODO: hex];   /* e.g. #D9BBF2 */
+  --color-dark:             [TODO: hex];   /* e.g. #2A0A2D — footer bg */
+  --color-deepest:          [TODO: hex];   /* e.g. #170218 — body text */
+
+  /* ── NEUTRAL / UI COLORS ──────────────────────────────────── */
+  --color-bg-light:         [TODO: hex];   /* e.g. #F5EFFB — alternating section bg */
+  --color-bg-white:         #ffffff;
+  --color-text-body:        [TODO: hex];   /* e.g. #1A1A1A */
+  --color-text-muted:       [TODO: hex];   /* e.g. #555555 */
+  --color-border-subtle:    [TODO: hex];   /* e.g. #E8E0F0 */
+  --color-border-mid:       [TODO: hex];   /* e.g. #D1C4E9 */
+
+  /* ── RGB CHANNELS ─────────────────────────────────────────
+     Required for rgba() expressions.
+     Usage: rgba(var(--color-primary-rgb), 0.15)
+     Add one for each color used in rgba() in components.css.
+  ──────────────────────────────────────────────────────────── */
+
+  --color-primary-rgb:      [TODO: R, G, B];   /* e.g. 73, 16, 79 */
+  --color-accent-rgb:       [TODO: R, G, B];   /* e.g. 235, 169, 80 */
+  --color-dark-rgb:         [TODO: R, G, B];   /* e.g. 42, 10, 45 */
+  --color-deepest-rgb:      [TODO: R, G, B];   /* e.g. 23, 2, 24 */
+  --color-neon-rgb:         [TODO: R, G, B];   /* e.g. 162, 99, 210 */
+
+
+  /* ─────────────────────────────────────────────────────────────
+     TYPOGRAPHY
+     ───────────────────────────────────────────────────────────── */
+
+  /* Font families — must match Google Fonts import in <head> */
+  --font-heading:           [TODO: font name];  /* e.g. 'Poppins', sans-serif */
+  --font-display:           [TODO: font name];  /* e.g. 'Lexend Exa', sans-serif */
+  --font-body:              [TODO: font name];  /* e.g. 'Inter', sans-serif */
+
+  /* Google Fonts import string (paste into HTML <head>):      */
+  /* [TODO: paste full @import or <link> string here as comment] */
+
+  /* Font sizes (px) */
+  --text-xs:    11px;
+  --text-sm:    13px;
+  --text-base:  15px;
+  --text-md:    17px;
+  --text-lg:    20px;
+  --text-xl:    24px;
+  --text-2xl:   32px;
+  --text-3xl:   40px;
+  --text-4xl:   48px;
+
+  /* Font weights */
+  --weight-regular:   400;
+  --weight-medium:    500;
+  --weight-semibold:  600;
+  --weight-bold:      700;
+  --weight-black:     800;
+
+
+  /* ─────────────────────────────────────────────────────────────
+     SPACING
+     ───────────────────────────────────────────────────────────── */
+
+  --space-xs:    8px;
+  --space-sm:    16px;
+  --space-md:    24px;
+  --space-lg:    32px;
+  --space-xl:    48px;
+  --space-2xl:   64px;
+  --space-3xl:   96px;
+  --space-4xl:   120px;
+
+  /* Section padding (top/bottom) */
+  --section-padding:        100px;
+  --section-padding-mobile:  64px;
+
+  /* Max content width */
+  --container-max:          1200px;
+  --container-padding:        48px;
+  --container-padding-mobile: 24px;
+
+
+  /* ─────────────────────────────────────────────────────────────
+     BORDERS & RADIUS
+     ───────────────────────────────────────────────────────────── */
+
+  --radius-sm:    4px;
+  --radius-md:    8px;
+  --radius-lg:    12px;
+  --radius-xl:    16px;
+  --radius-pill:  100px;
+
+
+  /* ─────────────────────────────────────────────────────────────
+     SHADOWS
+     ───────────────────────────────────────────────────────────── */
+
+  --shadow-card:    0 2px 16px rgba(var(--color-primary-rgb), 0.08);
+  --shadow-hover:   0 8px 32px rgba(var(--color-primary-rgb), 0.14);
+  --shadow-nav:     0 2px 24px rgba(var(--color-deepest-rgb), 0.4);
+  --shadow-cta:     0 4px 16px rgba(var(--color-accent-rgb), 0.3);
+  --shadow-cta-hover: 0 8px 24px rgba(var(--color-accent-rgb), 0.4);
+
+
+  /* ─────────────────────────────────────────────────────────────
+     NAV
+     ───────────────────────────────────────────────────────────── */
+
+  --nav-height:   72px;
+
+
+  /* ─────────────────────────────────────────────────────────────
+     SEMANTIC ALIASES
+     Maps abstract tokens to their intended usage.
+     Reference these in components.css rather than raw color vars
+     where the intent should be explicit.
+     ───────────────────────────────────────────────────────────── */
+
+  --color-cta-bg:           var(--color-accent);
+  --color-cta-text:         var(--color-primary);
+  --color-cta-hover:        var(--color-accent-hover);
+
+  --color-nav-bg:           var(--color-primary);
+  --color-nav-link:         rgba(255, 255, 255, 0.82);
+  --color-nav-link-active:  var(--color-accent);
+
+  --color-footer-bg:        var(--color-dark);
+  --color-footer-text:      rgba(255, 255, 255, 0.7);
+  --color-footer-link:      rgba(255, 255, 255, 0.7);
+  --color-footer-link-hover: var(--color-accent);
+
+  --color-hero-bg:          var(--color-primary);
+  --color-hero-text:        #ffffff;
+  --color-hero-subtext:     rgba(255, 255, 255, 0.78);
+
+  --color-section-label:    var(--color-accent);
+  --color-heading:          var(--color-primary);
+  --color-heading-white:    #ffffff;
+  --color-body-text:        var(--color-text-body);
+
+  --color-card-border:      var(--color-border-subtle);
+  --color-card-accent-top:  var(--color-neon);
+
+}
