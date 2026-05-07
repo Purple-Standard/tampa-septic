@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Does a Septic Tank Alarm Go Off? — Field Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4efe6;
+    --bg-soft: #ebe4d6;
+    --ink: #1a1916;
+    --ink-soft: #4a4740;
+    --ink-muted: #6b6555;       /* darkened for WCAG AA on cream (5.07:1) */
+    --ink-muted-dark: #9d9684;  /* footer-only muted, AA on dark (5.97:1) */
+    --rule: #d6cdb9;
+    --accent: #9b3a1c;
+    --accent-soft: #d47a55;     /* lightened for WCAG AA on dark footer (5.62:1) */
+    --paper: #faf6ee;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 400;
+    line-height: 1.65;
+    font-size: 18px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  /* Masthead */
+  .masthead {
+    border-bottom: 1px solid var(--rule);
+    padding: 1.25rem 2rem;
+    position: relative;
+    z-index: 2;
+    background: var(--bg);
+  }
+
+  .masthead-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 2rem;
+  }
+
+  .logo {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .logo-mark {
+    font-style: normal;
+    margin-right: 0.05em;
+  }
+
+  .nav {
+    display: flex;
+    gap: 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-soft);
+  }
+
+  .nav a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav a:hover { color: var(--accent); }
+
+  /* Article wrapper */
+  article {
+    position: relative;
+    z-index: 2;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+  }
+
+  /* Article header — full width */
+  .article-header {
+    max-width: 920px;
+    margin: 0 auto 4rem;
+  }
+
+  .meta-strip {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-muted);
+    margin-bottom: 2.5rem;
+  }
+
+  .meta-strip .dot {
+    width: 4px; height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .meta-strip .category {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(2.8rem, 7vw, 5.8rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+    max-width: 18ch;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .deck {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(1.25rem, 1.9vw, 1.55rem);
+    line-height: 1.35;
+    color: var(--ink-soft);
+    max-width: 50ch;
+    margin-bottom: 3rem;
+  }
+
+  .byline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .byline strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* Body grid: TOC | content | spacer */
+  .article-body {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 660px) 220px;
+    gap: 3rem;
+    justify-content: center;
+    counter-reset: section;
+  }
+
+  /* Sticky TOC */
+  .toc {
+    position: sticky;
+    top: 3rem;
+    align-self: start;
+    padding-top: 0.5rem;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+  }
+
+  .toc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink-muted);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .toc-list {
+    list-style: none;
+    counter-reset: toc;
+  }
+
+  .toc-list li {
+    counter-increment: toc;
+    margin-bottom: 0.85rem;
+    line-height: 1.3;
+  }
+
+  .toc-list a {
+    display: block;
+    text-decoration: none;
+    color: var(--ink-muted);
+    font-size: 0.85rem;
+    line-height: 1.35;
+    padding-left: 2rem;
+    position: relative;
+    transition: color 0.25s;
+  }
+
+  .toc-list a::before {
+    content: counter(toc, upper-roman);
+    position: absolute;
+    left: 0;
+    top: -0.05rem;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--rule);
+    transition: color 0.25s;
+    width: 1.5rem;
+  }
+
+  .toc-list a:hover { color: var(--ink); }
+  .toc-list a:hover::before { color: var(--accent); }
+
+  .toc-list a.active {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .toc-list a.active::before { color: var(--accent); }
+
+  /* Right spacer column */
+  .article-aside { /* intentionally empty */ }
+
+  /* Content column */
+  .content { max-width: 660px; }
+  .content > * + * { margin-top: 1.4rem; }
+  .content p {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
+  /* Drop cap */
+  .lede::first-letter {
+    font-family: 'Instrument Serif', serif;
+    float: left;
+    font-size: 5.4rem;
+    line-height: 0.85;
+    padding: 0.4rem 0.55rem 0 0;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  /* Section headings with auto Roman numerals */
+  h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(1.95rem, 3.2vw, 2.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-top: 4rem !important;
+    margin-bottom: 0.75rem;
+    max-width: 22ch;
+    counter-increment: section;
+    scroll-margin-top: 3rem;
+  }
+
+  h2::before {
+    content: counter(section, upper-roman);
+    display: block;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    letter-spacing: 0.08em;
+  }
+
+  /* Divider */
+  .divider {
+    margin: 3.5rem auto !important;
+    text-align: center;
+    color: var(--ink-muted);
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.5rem;
+    letter-spacing: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  /* Lists */
+  .content ul, .content ol {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .content ul li, .content ol li {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  .content ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.7rem;
+    width: 1rem;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .content ol { counter-reset: step; }
+
+  .content ol li {
+    counter-increment: step;
+    padding-left: 3rem;
+  }
+
+  .content ol li::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 0.05rem;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 1.45rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .content li strong {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 1.22rem;
+    color: var(--ink);
+    margin-right: 0.25rem;
+  }
+
+  .content p strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* Inline links — subtle: thin underline brightens on hover */
+  .content a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(155, 58, 28, 0.35);
+    padding-bottom: 1px;
+    transition: border-bottom-color 0.2s;
+  }
+
+  .content a:hover {
+    border-bottom-color: var(--accent);
+  }
+
+  /* Pull quote */
+  .pull-quote {
+    margin: 2.5rem 0 !important;
+    padding: 1.75rem 0;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 1.85rem;
+    line-height: 1.25;
+    color: var(--accent);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    text-align: center;
+    letter-spacing: -0.005em;
+  }
+
+  /* Image placeholders — smaller inline figures */
+  .image-placeholder {
+    margin: 2.5rem 0 !important;
+    background: var(--bg-soft);
+    border: 1px solid var(--rule);
+    aspect-ratio: 16 / 10;
+    max-width: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .image-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(45deg, transparent 49.5%, var(--rule) 49.5%, var(--rule) 50.5%, transparent 50.5%),
+      linear-gradient(-45deg, transparent 49.5%, var(--rule) 49.5%, var(--rule) 50.5%, transparent 50.5%);
+    opacity: 0.3;
+  }
+
+  .image-placeholder-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    position: relative;
+    background: var(--bg-soft);
+    padding: 0.2rem 0.65rem;
+  }
+
+  .image-placeholder-caption {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--ink-soft);
+    max-width: 38ch;
+    line-height: 1.35;
+    position: relative;
+    background: var(--bg-soft);
+    padding: 0.2rem 0.5rem;
+  }
+
+  /* End mark */
+  .end-mark {
+    text-align: center;
+    margin: 4rem 0 !important;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: var(--ink-muted);
+    font-size: 1.05rem;
+  }
+
+  .end-mark::before, .end-mark::after {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: var(--rule);
+    vertical-align: middle;
+    margin: 0 1rem;
+  }
+
+  /* Contact card */
+  .contact-card {
+    margin: 3rem 0 !important;
+    padding: 2rem;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .contact-card::before {
+    content: 'TAMPA BAY';
+    position: absolute;
+    top: -0.55rem;
+    left: 1.5rem;
+    background: var(--bg);
+    padding: 0 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+  }
+
+  .contact-card p {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 1.15rem !important;
+    line-height: 1.5;
+  }
+
+  /* Footer */
+  footer {
+    position: relative;
+    z-index: 2;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 5rem 2rem 2rem;
+    margin-top: 4rem;
+  }
+
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .footer-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent-soft);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .footer-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.15);
+  }
+
+  .footer-label::before {
+    content: '⟶';
+    color: var(--accent-soft);
+    font-size: 0.9rem;
+  }
+
+  .related {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 0;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .related-item {
+    padding: 2rem 1.5rem 2rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    border-right: 1px solid rgba(255,255,255,0.15);
+    transition: background 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .related-item:last-child { border-right: none; }
+  .related-item:hover { background: rgba(255,255,255,0.03); }
+  .related-item:hover .related-title { color: var(--accent-soft); }
+
+  .related-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink-muted-dark);
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+  }
+
+  .related-cat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--accent-soft);
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+  }
+
+  .related-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.6rem;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.75rem;
+    transition: color 0.2s;
+    padding-left: 1.5rem;
+  }
+
+  .related-excerpt {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.5;
+    padding-left: 1.5rem;
+  }
+
+  .colophon {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .colophon strong {
+    color: var(--accent-soft);
+    font-weight: 500;
+  }
+
+  .footer-nav {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-nav a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-nav a:hover { color: var(--accent-soft); }
+
+  /* Tablet — drop right spacer, keep TOC */
+  @media (max-width: 1100px) {
+    .article-body {
+      grid-template-columns: 200px minmax(0, 1fr);
+      max-width: 880px;
+      margin: 0 auto;
+    }
+    .article-aside { display: none; }
+  }
+
+  /* Mobile — hide TOC */
+  @media (max-width: 768px) {
+    .masthead-inner { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .nav { gap: 1.25rem; flex-wrap: wrap; }
+    article { padding: 2.5rem 1.25rem 4rem; }
+    .article-body {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .toc { display: none; }
+    .content p { font-size: 1.05rem; }
+    .lede::first-letter { font-size: 4rem; }
+    .related-item { border-right: none; padding: 1.5rem 0; }
+    .related-num, .related-cat, .related-title, .related-excerpt { padding-left: 1rem; }
+    .byline { flex-direction: column; align-items: flex-start; }
+    .pull-quote { font-size: 1.4rem; }
+    .image-placeholder { aspect-ratio: 4 / 3; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================== -->
+<!-- TODO — PLACEHOLDER BRANDING                                     -->
+<!-- "Field Notes" is a temporary masthead/brand for this draft.     -->
+<!-- Before publishing, replace:                                     -->
+<!--   1. <title> in <head>                                          -->
+<!--   2. .logo content in the <header class="masthead">             -->
+<!--   3. .nav links and labels                                      -->
+<!--   4. Footer .colophon strong + tagline                          -->
+<!--   5. Footer .footer-nav links                                   -->
+<!-- Decide if voice should stay neutral/editorial or shift to a     -->
+<!-- specific company voice (changes byline + closing CTAs).         -->
+<!-- ============================================================== -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="#" class="logo"><span class="logo-mark">F</span>ield Notes</a>
+    <nav class="nav">
+      <a href="#">Guides</a>
+      <a href="#">Maintenance</a>
+      <a href="#">Florida</a>
+      <a href="#">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<article>
+
+  <div class="article-header">
+    <div class="meta-strip">
+      <span class="category">● Homeowner Guide</span>
+      <span>Septic Systems</span>
+      <span class="dot"></span>
+      <span>4 min read</span>
+    </div>
+
+    <h1>Why does a septic tank alarm <em>go off?</em></h1>
+
+    <p class="deck">A loud beep at 2 a.m., a blinking red light on the side of the house, and a question every Florida homeowner eventually asks. Here's what it means — and what to do next.</p>
+
+    <div class="byline">
+      <span><strong>Field Notes Editorial</strong> &nbsp;·&nbsp; Tampa Bay, FL</span>
+      <span>Filed under <strong>Septic 101</strong></span>
+    </div>
+  </div>
+
+  <div class="article-body">
+
+    <!-- ========================================================== -->
+    <!-- TABLE OF CONTENTS                                           -->
+    <!-- Roman numerals are auto-generated via CSS counter.          -->
+    <!-- Each anchor href must match the id on the matching <h2>.    -->
+    <!-- ========================================================== -->
+    <aside class="toc" aria-label="Table of contents">
+      <div class="toc-label">In this article</div>
+      <ol class="toc-list">
+        <li><a href="#what-is">What is a septic tank alarm?</a></li>
+        <li><a href="#why">Why is my alarm going off?</a></li>
+        <li><a href="#rain">Can heavy rain cause it?</a></li>
+        <li><a href="#what-to-do">What to do when it goes off</a></li>
+        <li><a href="#reset">How to reset the alarm</a></li>
+        <li><a href="#call">When to call a professional</a></li>
+        <li><a href="#prevent">How to avoid it next time</a></li>
+      </ol>
+    </aside>
+
+    <div class="content">
+
+      <p class="lede">If your septic tank alarm is going off, don't panic. In most cases the cause is straightforward and the fix is simple.</p>
+
+      <h2 id="what-is">What is a septic tank alarm?</h2>
+      <p>Think of it as a smoke detector for your septic system. When the water level inside your pump tank gets too high, a float switch triggers an audible alarm and usually a red light on a small control panel near your tank.</p>
+
+      <div class="image-placeholder">
+        <span class="image-placeholder-label">Figure 01 / Photo</span>
+        <span class="image-placeholder-caption">A typical septic alarm control panel mounted on an exterior wall.</span>
+      </div>
+
+      <p>What does a septic tank alarm sound like? Usually a loud buzzing or beeping — some describe it as chirping. It's hard to miss, which is the point.</p>
+
+      <p>Not every system has one. Gravity-fed systems often don't, though some local codes require alarms regardless. If your system uses a pump (very common in Florida because of the flat terrain), there's a good chance you have an alarm panel somewhere nearby.</p>
+
+      <div class="divider">· · ·</div>
+
+      <h2 id="why">Why is my septic tank alarm going off?</h2>
+      <p>The short answer: water in your pump tank has risen too high and the pump isn't keeping up. Common causes:</p>
+
+      <ul>
+        <li><strong>Pump failure</strong> — The pump stopped working. Could be a burnt-out motor, a tripped breaker, or a mechanical failure. The most serious cause.</li>
+        <li><strong>Float switch stuck</strong> — The float itself got tangled or waterlogged and is giving a false reading. Annoying, but fixable.</li>
+        <li><strong>Power outage recovery</strong> — Your pump was offline for hours while water kept coming in. Once power returned, the system needed time to catch up.</li>
+        <li><strong>Heavy rain and groundwater intrusion</strong> — Big one in Florida. More on this below.</li>
+        <li><strong>Clogged effluent filter</strong> — A backed-up filter (the screen at your tank's outlet) slows drainage and causes levels to rise. Usually caught during routine pumping.</li>
+      </ul>
+
+      <div class="image-placeholder">
+        <span class="image-placeholder-label">Figure 02 / Diagram</span>
+        <span class="image-placeholder-caption">A simple labeled diagram showing float switch position inside a pump tank.</span>
+      </div>
+
+      <h2 id="rain">Can heavy rain cause a septic alarm to go off?</h2>
+
+      <p class="pull-quote">Yes — and in Florida, it's one of the most common reasons.</p>
+
+      <p>When the ground gets saturated after a storm, water seeps into your tank through cracks, joints, or the inlet line. Your pump ends up fighting groundwater on top of normal household use, and it can't always keep up.</p>
+
+      <p>If your alarm went off during a storm and clears within a day or two, groundwater intrusion is probably the culprit. Reduce water use inside until things settle.</p>
+
+      <p>If it happens every rainstorm, get your tank inspected. Repeated water intrusion usually means cracks or other damage that gets worse over time.</p>
+
+      <div class="divider">· · ·</div>
+
+      <h2 id="what-to-do">What should I do when the alarm goes off?</h2>
+      <p>Stay calm, but act on it. The order of operations:</p>
+
+      <ol>
+        <li><strong>Silence the alarm.</strong> Find the control panel and press the silence or mute button. The red light will stay on, but at least the noise stops while you figure out what's happening.</li>
+        <li><strong>Cut back on water use.</strong> No laundry, no dishwasher, shorter showers. Give the pump a chance to catch up.</li>
+        <li><strong>Check the breaker.</strong> Look for the breaker labeled for your septic pump and reset it once. If it trips again right away, leave it alone and call a pro.</li>
+        <li><strong>Wait 6 to 8 hours.</strong> If the red light clears on its own after reducing water use, your system likely worked through it.</li>
+        <li><strong>If the light stays on or the alarm sounds again, call a pro.</strong></li>
+      </ol>
+
+      <p><strong>What if the septic alarm goes off at night?</strong> Silence it, reduce water use, and monitor it until morning. Unless you're seeing sewage backup inside your home, it can usually wait a few hours.</p>
+
+      <h2 id="reset">How do I reset my septic tank alarm?</h2>
+      <p>Once the water level drops back to normal, most systems reset on their own. Some panels need you to press a "reset" button manually.</p>
+
+      <p>Silencing or resetting the alarm doesn't fix what caused it. If it goes off again within a day or two, something needs attention.</p>
+
+      <div class="divider">· · ·</div>
+
+      <h2 id="call">When to call a septic professional</h2>
+      <p>Some alarms resolve themselves. These ones don't:</p>
+
+      <ul>
+        <li>The alarm keeps coming back after you silence it</li>
+        <li>The red light won't clear even after reducing water use</li>
+        <li>You smell sewage inside or outside</li>
+        <li>Toilets or drains are slow or backing up</li>
+        <li>There's no obvious cause — no storm, no outage, normal water use</li>
+        <li>Your tank hasn't been pumped in more than 3 to 5 years</li>
+      </ul>
+
+      <div class="image-placeholder">
+        <span class="image-placeholder-label">Figure 03 / Illustration</span>
+        <span class="image-placeholder-caption">A warning-signs checklist or a technician inspecting a septic panel.</span>
+      </div>
+
+      <div class="contact-card">
+        <p>Tampa-area homeowners can reach out to <a href="https://www.acesepticandwaste.com">ACE Septic &amp; Waste</a> or <a href="https://www.southernsepticanddesign.com">Southern Septic &amp; Design</a> for inspections, pump service, and emergency repairs.</p>
+      </div>
+
+      <h2 id="prevent">How to avoid this happening again</h2>
+      <p>Most of this is preventable with basic upkeep:</p>
+
+      <ul>
+        <li><strong>Pump your tank every 3 to 5 years</strong> for most households — don't wait for a problem.</li>
+        <li><strong>Stop flushing wipes</strong> — even the "flushable" ones are hard on your system.</li>
+        <li><strong>Keep your drain field clear</strong> — no cars, no trees, no roof runoff directed toward it.</li>
+        <li><strong>Know where your alarm panel is</strong> — ask during your next service visit if you've never been shown it.</li>
+      </ul>
+
+      <div class="image-placeholder">
+        <span class="image-placeholder-label">Figure 04 / Diagram</span>
+        <span class="image-placeholder-caption">A typical septic system layout with labeled components.</span>
+      </div>
+
+      <p class="end-mark">End</p>
+
+      <p style="font-family: 'Instrument Serif', serif; font-style: italic; color: var(--ink-soft); text-align: center; font-size: 1.05rem;">Serving Tampa Bay and surrounding Florida communities. Contact <a href="https://www.acesepticandwaste.com">ACE Septic &amp; Waste</a> or <a href="https://www.southernsepticanddesign.com">Southern Septic &amp; Design</a> for service, inspections, or questions about your system.</p>
+
+    </div>
+
+    <div class="article-aside"></div>
+
+  </div>
+</article>
+
+<footer>
+  <div class="footer-inner">
+
+    <div class="footer-label">Keep Reading</div>
+
+    <!-- ========================================================== -->
+    <!-- RELATED POSTS                                               -->
+    <!-- To swap in a real post, edit:                               -->
+    <!--   1. href="..."   →  the URL of the related blog page       -->
+    <!--   2. .related-cat →  the category label                     -->
+    <!--   3. .related-title → the post headline                     -->
+    <!--   4. .related-excerpt → 1–2 sentence preview                -->
+    <!-- Add or remove <a class="related-item"> blocks as needed.    -->
+    <!-- ========================================================== -->
+    <div class="related">
+
+      <a href="#" class="related-item">
+        <div class="related-num">N° 01</div>
+        <div class="related-cat">Maintenance</div>
+        <div class="related-title">How often should you really pump a septic tank?</div>
+        <div class="related-excerpt">The "every 3 to 5 years" rule, unpacked — and why your household size matters more than the calendar.</div>
+      </a>
+
+      <a href="#" class="related-item">
+        <div class="related-num">N° 02</div>
+        <div class="related-cat">Florida</div>
+        <div class="related-title">Why septic systems struggle during hurricane season</div>
+        <div class="related-excerpt">Saturated ground, surge water, power loss. A field guide to keeping your system standing through storm season.</div>
+      </a>
+
+      <a href="#" class="related-item">
+        <div class="related-num">N° 03</div>
+        <div class="related-cat">Diagnostics</div>
+        <div class="related-title">Slow drains, gurgling toilets, soggy yard: reading the signs</div>
+        <div class="related-excerpt">The four early warnings that show up before an alarm ever does. Catch them and you save a weekend — and a few thousand dollars.</div>
+      </a>
+
+    </div>
+
+    <div class="colophon">
+      <span><strong>Field Notes</strong> &nbsp;·&nbsp; A practical journal for Florida homeowners</span>
+      <nav class="footer-nav">
+        <a href="#">About</a>
+        <a href="#">Archive</a>
+        <a href="#">Contact</a>
+        <a href="#">Subscribe</a>
+      </nav>
+    </div>
+
+  </div>
+</footer>
+
+<script>
+  // Highlight the current section in the TOC as the user scrolls
+  (function () {
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const sections = Array.from(tocLinks).map(link => {
+      const id = link.getAttribute('href').slice(1);
+      return document.getElementById(id);
+    }).filter(Boolean);
+
+    const linkById = {};
+    tocLinks.forEach(link => {
+      linkById[link.getAttribute('href').slice(1)] = link;
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const id = entry.target.id;
+        if (entry.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          if (linkById[id]) linkById[id].classList.add('active');
+        }
+      });
+    }, {
+      rootMargin: '-10% 0px -70% 0px',
+      threshold: 0
+    });
+
+    sections.forEach(s => observer.observe(s));
+  })();
+</script>
+
+</body>
+</html>
